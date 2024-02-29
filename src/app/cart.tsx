@@ -11,12 +11,10 @@ const CartScreens = () => {
     <View>
       <FlatList
         data={items}
-        contentContainerStyle={{ padding: 10, gap: 10 }}
-        renderItem={({ item }) => {
-          <CartListItem cartItem={item} />;
-        }}
+        renderItem={({ item }) => <CartListItem cartItem={item} />}
+        contentContainerStyle={{ gap: 10, padding: 10 }}
       />
-      <Text>CartScreens : {items.length}</Text>
+
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
