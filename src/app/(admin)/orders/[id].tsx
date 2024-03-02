@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import OrderListItem from "@/src/components/OrderListItems";
-import OrderItemListItem from "@/src/components/OrderItemListItem";
-import { OrderStatusList } from "@/src/types";
-import Colors from "@/src/constants/Colors";
-import { useOrderDetails, useUpdateOrder } from "@/src/api/orders";
+import { useOrderDetails, useUpdateOrder } from "@/api/orders";
+import OrderItemListItem from "@/components/OrderItemListItem";
+import OrderListItem from "@/components/OrderListItems";
+import { OrderStatusList } from "@/types";
+import Colors from "@/constants/Colors";
 
 const OrderDetailsScreen = () => {
   const { id: idString } = useLocalSearchParams();

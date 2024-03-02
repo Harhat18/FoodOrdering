@@ -7,10 +7,10 @@ import {
 } from "react-native";
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import OrderListItem from "@/src/components/OrderListItems";
-import OrderItemListItem from "@/src/components/OrderItemListItem";
-import { useOrderDetails } from "@/src/api/orders";
-import { useUpdateOrderSubscription } from "@/src/api/orders/subscriptions";
+import { useOrderDetails } from "@/api/orders";
+import { useUpdateOrderSubscription } from "@/api/orders/subscriptions";
+import OrderItemListItem from "@/components/OrderItemListItem";
+import OrderListItem from "@/components/OrderListItems";
 
 const OrderDetailsScreen = () => {
   const { id: idString } = useLocalSearchParams();

@@ -8,13 +8,14 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { defaultPizzaImage } from "@/src/components/ProductlistItem";
-import { useCart } from "@/src/providers/CartProvider";
-import { PizzaSize } from "@/src/types";
+
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { FontAwesome } from "@expo/vector-icons";
-import { useProduct } from "@/src/api/products";
-import RemoteImage from "@/src/components/RemoteImage";
+import { PizzaSize } from "@/types";
+import { useProduct } from "@/api/products";
+import { useCart } from "@/providers/CartProvider";
+import RemoteImage from "@/components/RemoteImage";
+import { defaultPizzaImage } from "@/components/ProductlistItem";
 
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 

@@ -5,17 +5,18 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 
 import * as FileSystem from "expo-file-system";
 import { randomUUID } from "expo-crypto";
+
+import { decode } from "base64-arraybuffer";
 import {
   useDeleteProduct,
   useInsertProduct,
   useProduct,
   useUpdateProduct,
-} from "@/src/api/products";
-import { supabase } from "@/src/lib/supabase";
-import { defaultPizzaImage } from "@/src/components/ProductlistItem";
-import Button from "@/src/components/Button";
-import Colors from "@/src/constants/Colors";
-import { decode } from "base64-arraybuffer";
+} from "@/api/products";
+import { supabase } from "@/lib/supabase";
+import { defaultPizzaImage } from "@/components/ProductlistItem";
+import Button from "@/components/Button";
+import Colors from "@/constants/Colors";
 
 const CreateProductScreen = () => {
   const [name, setName] = useState("");

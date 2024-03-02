@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import Colors from "@/src/constants/Colors";
+import Colors from "@/constants/Colors";
 import { Tables } from "../types";
 import { Link, useSegments } from "expo-router";
 import RemoteImage from "./RemoteImage";

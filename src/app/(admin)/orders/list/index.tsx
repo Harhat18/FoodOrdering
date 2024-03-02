@@ -1,8 +1,8 @@
 // import { FlatList } from 'react-native-gesture-handler';
+import { useAdminOrderList } from "@/api/orders";
+import { useInsertOrderSubscription } from "@/api/orders/subscriptions";
+import OrderListItem from "@/components/OrderListItems";
 import { ActivityIndicator, FlatList, Text } from "react-native";
-import OrderListItem from "@/src/components/OrderListItems";
-import { useAdminOrderList } from "@/src/api/orders";
-import { useInsertOrderSubscription } from "@/src/api/orders/subscriptions";
 
 export default function OrdersScreen() {
   const {

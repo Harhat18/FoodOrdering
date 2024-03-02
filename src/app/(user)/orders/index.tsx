@@ -1,7 +1,7 @@
 // import { FlatList } from 'react-native-gesture-handler';
 import { ActivityIndicator, FlatList, Text } from "react-native";
-import OrderListItem from "@/src/components/OrderListItems";
-import { useMyOrderList } from "@/src/api/orders";
+import OrderListItem from "@/components/OrderListItems";
+import { useMyOrderList } from "@/api/orders";
 
 export default function OrdersScreen() {
   const { data: orders, error, isLoading } = useMyOrderList();

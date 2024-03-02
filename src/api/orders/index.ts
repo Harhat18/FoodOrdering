@@ -1,6 +1,6 @@
-import { supabase } from "@/src/lib/supabase";
-import { useAuth } from "@/src/providers/AuthProvider";
-import { InsertTables, UpdateTables } from "@/src/types";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/AuthProvider";
+import { InsertTables, UpdateTables } from "@/types";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 
 export const useAdminOrderList = ({ archived = false }) => {
