@@ -15,6 +15,7 @@ import { supabase } from "@/src/lib/supabase";
 import { defaultPizzaImage } from "@/src/components/ProductlistItem";
 import Button from "@/src/components/Button";
 import Colors from "@/src/constants/Colors";
+import { decode } from "base64-arraybuffer";
 
 const CreateProductScreen = () => {
   const [name, setName] = useState("");
@@ -158,15 +159,15 @@ const CreateProductScreen = () => {
     const filePath = `${randomUUID()}.png`;
     const contentType = "image/png";
 
-    // const { data, error } = await supabase.storage
-    //   .from('product-images')
-    //   // .upload(filePath, decode(base64), { contentType });
+    const { data, error } = await supabase.storage
+      .from("product-images")
+      .upload(filePath, decode(base64), { contentType });
 
-    // console.log(error);
+    console.log(error);
 
-    // if (data) {
-    //   return data.path;
-    // }
+    if (data) {
+      return data.path;
+    }
   };
 
   return (
