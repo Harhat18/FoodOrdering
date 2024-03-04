@@ -1,14 +1,15 @@
-import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Redirect, Tabs } from "expo-router";
-import Colors from "@/constants/Colors";
-import { useColorScheme } from "@/components/useColorScheme";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
-import { useAuth } from "@/providers/AuthProvider";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Link, Redirect, Tabs } from 'expo-router';
+import { Pressable, useColorScheme } from 'react-native';
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+import Colors from '../../constants/Colors';
+import { useAuth } from '@/providers/AuthProvider';
+
+/**
+ * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+ */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
+  name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
 }) {
   return <FontAwesome size={20} style={{ marginBottom: -3 }} {...props} />;
@@ -19,21 +20,21 @@ export default function TabLayout() {
   const { session } = useAuth();
 
   if (!session) {
-    return <Redirect href={"/"} />;
+    return <Redirect href={'/'} />;
   }
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: useClientOnlyValue(false, true),
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}
     >
       <Tabs.Screen name="index" options={{ href: null }} />
+
       <Tabs.Screen
         name="menu"
         options={{
-          title: "Menu",
+          title: 'Menu',
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="cutlery" color={color} />
@@ -43,15 +44,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="orders"
         options={{
+          title: 'Orders',
           headerShown: false,
-          title: "Orders",
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
+
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: 'Profile',
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />

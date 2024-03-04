@@ -1,32 +1,24 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import React from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { useOrderDetails } from "@/api/orders";
-import { useUpdateOrderSubscription } from "@/api/orders/subscriptions";
-import OrderItemListItem from "@/components/OrderItemListItem";
-import OrderListItem from "@/components/OrderListItems";
+import { useOrderDetails } from '@/api/orders';
+import { useUpdateOrderSubscription } from '@/api/orders/subscriptions';
+import OrderItemListItem from '@/components/OrderItemListItem';
+import OrderListItem from '@/components/OrderListItem';
+import { Stack, useLocalSearchParams } from 'expo-router';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 
-const OrderDetailsScreen = () => {
+export default function OrderDetailsScreen() {
   const { id: idString } = useLocalSearchParams();
-
-  const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
+  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
   const { data: order, isLoading, error } = useOrderDetails(id);
-
   useUpdateOrderSubscription(id);
 
   if (isLoading) {
     return <ActivityIndicator />;
   }
   if (error) {
-    return <Text>Failed to fetch products</Text>;
+    return <Text>Failed to fetch</Text>;
   }
+
   return (
     <View style={{ padding: 10, gap: 20, flex: 1 }}>
       <Stack.Screen options={{ title: `Order #${id}` }} />
@@ -39,8 +31,4 @@ const OrderDetailsScreen = () => {
       />
     </View>
   );
-};
-
-export default OrderDetailsScreen;
-
-const styles = StyleSheet.create({});
+}

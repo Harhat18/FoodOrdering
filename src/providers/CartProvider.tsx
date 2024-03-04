@@ -1,15 +1,16 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
-import { CartItem, Tables } from "../types";
-import { randomUUID } from "expo-crypto";
-import { useInsertOrder } from "../api/orders";
-import { useRouter } from "expo-router";
-import { useInsertOrderItems } from "../api/order_item";
-import { initialisePaymentSheet, openPaymentSheet } from "@/lib/stripe";
+import { CartItem, Tables } from '@/types';
+import { PropsWithChildren, createContext, useContext, useState } from 'react';
+import { randomUUID } from 'expo-crypto';
+import { useInsertOrder } from '@/api/orders';
+import { useRouter } from 'expo-router';
+import { useInsertOrderItems } from '@/api/order-items';
+import { initialisePaymentSheet, openPaymentSheet } from '@/lib/stripe';
 
-type Product = Tables<"products">;
+type Product = Tables<'products'>;
+
 type CartType = {
   items: CartItem[];
-  addItem: (product: Product, size: CartItem["size"]) => void;
+  addItem: (product: Product, size: CartItem['size']) => void;
   updateQuantity: (itemId: string, amount: -1 | 1) => void;
   total: number;
   checkout: () => void;
@@ -28,9 +29,11 @@ const CartProvider = ({ children }: PropsWithChildren) => {
 
   const { mutate: insertOrder } = useInsertOrder();
   const { mutate: insertOrderItems } = useInsertOrderItems();
+
   const router = useRouter();
 
-  const addItem = (product: Product, size: CartItem["size"]) => {
+  const addItem = (product: Product, size: CartItem['size']) => {
+    // if already in cart, increment quantity
     const existingItem = items.find(
       (item) => item.product === product && item.size === size
     );
@@ -41,21 +44,22 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     }
 
     const newCartItem: CartItem = {
-      id: randomUUID(),
-      product_id: product.id,
+      id: randomUUID(), // generate
       product,
+      product_id: product.id,
       size,
       quantity: 1,
     };
 
-    setItems([...items, newCartItem]);
+    setItems([newCartItem, ...items]);
   };
 
+  // updateQuantity
   const updateQuantity = (itemId: string, amount: -1 | 1) => {
     setItems(
       items
         .map((item) =>
-          itemId !== item.id
+          item.id !== itemId
             ? item
             : { ...item, quantity: item.quantity + amount }
         )
@@ -87,13 +91,14 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     );
   };
 
-  const saveOrderItems = (order: Tables<"orders">) => {
+  const saveOrderItems = (order: Tables<'orders'>) => {
     const orderItems = items.map((cartItem) => ({
       order_id: order.id,
       product_id: cartItem.product_id,
       quantity: cartItem.quantity,
       size: cartItem.size,
     }));
+
     insertOrderItems(orderItems, {
       onSuccess() {
         clearCart();
@@ -101,6 +106,7 @@ const CartProvider = ({ children }: PropsWithChildren) => {
       },
     });
   };
+
   return (
     <CartContext.Provider
       value={{ items, addItem, updateQuantity, total, checkout }}

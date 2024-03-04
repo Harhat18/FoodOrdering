@@ -1,23 +1,22 @@
+import { useOrderDetails, useUpdateOrder } from '@/api/orders';
+import OrderItemListItem from '@/components/OrderItemListItem';
+import OrderListItem from '@/components/OrderListItem';
+import Colors from '@/constants/Colors';
+import { notifyUserAboutOrderUpdate } from '@/lib/notifications';
+import { OrderStatusList } from '@/types';
+import orders from '@assets/data/orders';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import {
-  ActivityIndicator,
   FlatList,
-  Pressable,
-  StyleSheet,
   Text,
   View,
-} from "react-native";
-import React from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
-import { useOrderDetails, useUpdateOrder } from "@/api/orders";
-import OrderItemListItem from "@/components/OrderItemListItem";
-import OrderListItem from "@/components/OrderListItems";
-import { OrderStatusList } from "@/types";
-import Colors from "@/constants/Colors";
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
 
-const OrderDetailsScreen = () => {
+export default function OrderDetailsScreen() {
   const { id: idString } = useLocalSearchParams();
-
-  const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
+  const id = parseFloat(typeof idString === 'string' ? idString : idString[0]);
 
   const { data: order, isLoading, error } = useOrderDetails(id);
   const { mutate: updateOrder } = useUpdateOrder();
@@ -27,16 +26,18 @@ const OrderDetailsScreen = () => {
       id: id,
       updatedFields: { status },
     });
-    // if (order) {
-    //   await notifyUserAboutOrderUpdate({ ...order, status });
-    // }
+    if (order) {
+      await notifyUserAboutOrderUpdate({ ...order, status });
+    }
   };
+
   if (isLoading) {
     return <ActivityIndicator />;
   }
   if (error || !order) {
-    return <Text>Failed to fetch products</Text>;
+    return <Text>Failed to fetch</Text>;
   }
+
   return (
     <View style={{ padding: 10, gap: 20, flex: 1 }}>
       <Stack.Screen options={{ title: `Order #${id}` }} />
@@ -48,8 +49,8 @@ const OrderDetailsScreen = () => {
         ListHeaderComponent={() => <OrderListItem order={order} />}
         ListFooterComponent={() => (
           <>
-            <Text style={{ fontWeight: "bold" }}>Status</Text>
-            <View style={{ flexDirection: "row", gap: 5 }}>
+            <Text style={{ fontWeight: 'bold' }}>Status</Text>
+            <View style={{ flexDirection: 'row', gap: 5 }}>
               {OrderStatusList.map((status) => (
                 <Pressable
                   key={status}
@@ -63,13 +64,13 @@ const OrderDetailsScreen = () => {
                     backgroundColor:
                       order.status === status
                         ? Colors.light.tint
-                        : "transparent",
+                        : 'transparent',
                   }}
                 >
                   <Text
                     style={{
                       color:
-                        order.status === status ? "white" : Colors.light.tint,
+                        order.status === status ? 'white' : Colors.light.tint,
                     }}
                   >
                     {status}
@@ -82,8 +83,4 @@ const OrderDetailsScreen = () => {
       />
     </View>
   );
-};
-
-export default OrderDetailsScreen;
-
-const styles = StyleSheet.create({});
+}

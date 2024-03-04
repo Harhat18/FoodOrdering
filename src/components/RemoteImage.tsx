@@ -1,21 +1,21 @@
-import { Image } from "react-native";
-import React, { ComponentProps, useEffect, useMemo, useState } from "react";
-import { supabase } from "../lib/supabase";
+import { Image } from 'react-native';
+import React, { ComponentProps, useEffect, useMemo, useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 type RemoteImageProps = {
-  path?: string;
+  path?: string | null;
   fallback: string;
-} & Omit<ComponentProps<typeof Image>, "source">;
+} & Omit<ComponentProps<typeof Image>, 'source'>;
 
 const RemoteImage = ({ path, fallback, ...imageProps }: RemoteImageProps) => {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState('');
 
   useEffect(() => {
     if (!path) return;
     (async () => {
-      setImage("");
+      setImage('');
       const { data, error } = await supabase.storage
-        .from("product-images")
+        .from('product-images')
         .download(path);
 
       if (error) {
